@@ -20,7 +20,7 @@
     "lint:prettier": "prettier --check '**/*.{js,ts,json,yaml,md}'",
     "fix": "concurrently \"npm run fix:eslint\" \"npm run fix:prettier\"",
     "fix:eslint": "npm run lint:eslint -- --fix",
-    "fix:prettier": "npm run lint:prettier -- --write .",
+    "fix:prettier": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",

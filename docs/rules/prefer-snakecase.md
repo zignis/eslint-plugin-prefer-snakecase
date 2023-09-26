@@ -70,9 +70,7 @@ Allows the use of `PascalCase` identifiers. (Useful for React component declarat
 /*eslint prefer-snakecase: ["error", "always", { "allowPascalCase": true }]*/
 
 // Valid
-const MyComponent = () => (
-    <div>hello</div>
-);
+const MyComponent = () => <div>hello</div>;
 ```
 
 ### whitelist
