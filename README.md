@@ -1,7 +1,7 @@
 # eslint-plugin-prefer-snakecase
 
-![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/zignis/eslint-plugin-prefer-snakecase/CI?style=for-the-badge)
-![npm](https://img.shields.io/npm/v/eslint-plugin-prefer-snakecase?style=for-the-badge)
+![GitHub Workflow Status](https://github.com/zignis/eslint-plugin-prefer-snakecase/actions/workflows/main.yaml/badge.svg)
+![npm](https://img.shields.io/npm/v/eslint-plugin-prefer-snakecase?style=plastic)
 
 Enforces `snake_case` naming convention for identifiers.
 
