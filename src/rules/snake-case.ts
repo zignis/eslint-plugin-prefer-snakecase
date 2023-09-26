@@ -1,6 +1,6 @@
 import { Rule } from "eslint";
 import { DEFAULT_SKIP, PRIMITIVE_AND_BUILT_IN_TYPES } from "../constants";
-import { is_snake_case, to_snake_case } from "../utils";
+import { is_pascal_case, is_snake_case, to_snake_case } from "../utils";
 
 export const snake_case: Rule.RuleModule = {
   /* eslint-disable prefer-snakecase/prefer-snakecase */
@@ -22,6 +22,9 @@ export const snake_case: Rule.RuleModule = {
           type: "object",
           properties: {
             disableScreaming: {
+              type: "boolean",
+            },
+            allowPascalCase: {
               type: "boolean",
             },
             whitelist: {
@@ -54,6 +57,7 @@ export const snake_case: Rule.RuleModule = {
       ? settings.skip
       : DEFAULT_SKIP;
     const disable_screaming = Boolean(settings.disableScreaming);
+    const allow_pascal_case = Boolean(settings.allowPascalCase);
 
     // noinspection JSUnusedGlobalSymbols
     return {
@@ -70,6 +74,11 @@ export const snake_case: Rule.RuleModule = {
             skip.includes(node.parent.type) ||
             [node.type, node.parent.type].includes("ImportSpecifier") // Always skip imports
           ) {
+            return;
+          }
+
+          // Handle PascalCase
+          if (allow_pascal_case && is_pascal_case(name)) {
             return;
           }
 

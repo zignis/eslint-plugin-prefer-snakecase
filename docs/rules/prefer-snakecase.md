@@ -59,6 +59,22 @@ Disallows the use of `SCREAMING_SNAKE_CASE` identifiers.
 const FOO_BAR = 1; // Invalid
 ```
 
+### `allowPascalCase`
+
+- Type: `boolean`
+- Default: `false`
+
+Allows the use of `PascalCase` identifiers. (Useful for React component declarations)
+
+```js
+/*eslint prefer-snakecase: ["error", "always", { "allowPascalCase": true }]*/
+
+// Valid
+const MyComponent = () => (
+    <div>hello</div>
+);
+```
+
 ### whitelist
 
 - Type: `string[]`

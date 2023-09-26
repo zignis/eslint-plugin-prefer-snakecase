@@ -7,6 +7,9 @@ const tester = new RuleTester({
   parserOptions: {
     ecmaVersion: 6,
     sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   /* eslint-enable prefer-snakecase/prefer-snakecase */
 });
@@ -113,6 +116,15 @@ tester.run("snake-case", snake_case, {
         ? U | TupleToUnion<Rest>
         : T;
     `,
+    {
+      code: `
+        const Component = () => (
+            <Other camelCaseAttr={true} />
+        ); 
+      `,
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
+      options: ["always", { allowPascalCase: true }],
+    },
   ],
   invalid: [
     {
