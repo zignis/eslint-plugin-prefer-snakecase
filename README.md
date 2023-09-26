@@ -24,3 +24,7 @@ recommended configuration.
   "plugins": ["prefer-snakecase"]
 }
 ```
+
+## Rules
+
+Available rules: https://github.com/zignis/eslint-plugin-prefer-snakecase/blob/main/docs/rules/prefer-snakecase.md
