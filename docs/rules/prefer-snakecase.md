@@ -1,6 +1,6 @@
-# snake-case/snake-case
+# prefer-snakecase/prefer-snakecase
 
-_This rule is included in `plugin:snake-case/recommended` preset._
+_This rule is included in `plugin:prefer-snakecase/recommended` preset._
 
 🔧 The --fix option on the command line can automatically fix the problems reported by this rule.
 
@@ -11,7 +11,7 @@ This rule is aimed at enforcing `snake_case` naming convention for identifiers.
 Examples of **incorrect** code:
 
 ```js
-/*eslint snake-case: "error"*/
+/*eslint prefer-snakecase: "error"*/
 
 var fooBar = 1;
 
@@ -29,7 +29,7 @@ class SomeClass {
 Examples of **correct** code:
 
 ```js
-/*eslint snake-case: "error"*/
+/*eslint prefer-snakecase: "error"*/
 
 var foo_bar = 1;
 
@@ -54,7 +54,7 @@ class SomeClass {
 Disallows the use of `SCREAMING_SNAKE_CASE` identifiers.
 
 ```js
-/*eslint snake-case: ["error", "always", { "disableScreaming": true }]*/
+/*eslint prefer-snakecase: ["error", "always", { "disableScreaming": true }]*/
 
 const FOO_BAR = 1; // Invalid
 ```
@@ -67,7 +67,7 @@ const FOO_BAR = 1; // Invalid
 Array of custom identifiers to ignore.
 
 ```js
-/*eslint snake-case: ["error", "always", { "whitelist": ["fooBar"] }]*/
+/*eslint prefer-snakecase: ["error", "always", { "whitelist": ["fooBar"] }]*/
 
 const fooBar = 1; // Valid
 ```
@@ -75,12 +75,18 @@ const fooBar = 1; // Valid
 ### skip
 
 - Type: `string[]`
-- Default: `["NewExpression", "MemberExpression", "ClassDeclaration", "TSEnumDeclaration"]`
+- Default: [Source](https://github.com/zignis/eslint-plugin-prefer-snakecase/blob/main/src/constants/index.ts#L4)
 
 Array of AST node types to ignore. This also ignores the children of the nodes. [List of available AST node types](https://github.com/estree/estree/tree/master).
 
 ```js
-/*eslint snake-case: ["error", "always", { "skip": ["FunctionDeclaration"] }]*/
+/*eslint prefer-snakecase: ["error", "always", { "skip": ["FunctionDeclaration"] }]*/
 
 function doSomething() {} // Valid
+```
+
+To skip all the default AST types, pass an array with an empty string:
+
+```js
+/*eslint prefer-snakecase: ["error", "always", { "skip": [""] }]*/
 ```

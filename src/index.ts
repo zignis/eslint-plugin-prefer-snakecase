@@ -8,5 +8,5 @@ export const configs = {
 };
 
 export const rules = {
-  "snake-case": snake_case,
+  "prefer-snakecase": snake_case,
 };

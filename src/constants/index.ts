@@ -1,11 +1,17 @@
-import { Rule } from "eslint";
-
 // Default list of node types whose children can be exempted from the tree
-export const DEFAULT_FILTER: (Rule.Node["type"] | "TSEnumDeclaration")[] = [
-  "NewExpression", // Allow constructing new primitive instances
+export const DEFAULT_SKIP: string[] = [
+  "NewExpression",
   "MemberExpression", // Can come from third-party libraries
-  "ClassDeclaration", // Allow class declarations
-  "TSEnumDeclaration", // Allow enum declarations
+  "ClassDeclaration",
+  "CallExpression",
+  // Typescript
+  "TSEnumDeclaration",
+  "TSQualifiedName",
+  "TSTypeAliasDeclaration",
+  "TSInterfaceDeclaration",
+  "TSEnumMember",
+  "TSTypeParameter",
+  "TSTypeReference",
 ];
 
 // List of ignored primitive and built-in types

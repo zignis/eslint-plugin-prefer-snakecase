@@ -3,10 +3,12 @@ import { snake_case } from "./snake-case";
 
 const tester = new RuleTester({
   parser: require.resolve("@typescript-eslint/parser"),
+  /* eslint-disable prefer-snakecase/prefer-snakecase */
   parserOptions: {
     ecmaVersion: 6,
     sourceType: "module",
   },
+  /* eslint-enable prefer-snakecase/prefer-snakecase */
 });
 
 tester.run("snake-case", snake_case, {
@@ -23,10 +25,94 @@ tester.run("snake-case", snake_case, {
     "parseFloat('0.5')",
     "class SomeClass {}",
     "enum SomeEnum {}",
+    "type SomeType = string",
+    "interface SomeInterface {}",
     {
       code: "const fooBar = 1;",
       options: ["always", { whitelist: ["fooBar"] }],
     },
+    "import { Some } from 'some';",
+    `
+      enum SomeEnum {
+        SOME_VALUE,
+        otherValue
+      }  
+    `,
+    `
+      type A = string;
+      type B = { some_key: A }
+    `,
+    // https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-types
+    `
+      interface GenericIdentityFn<Type> {
+        (arg: Type): Type;
+      }
+       
+      function identity<Type>(arg: Type): Type {
+        return arg;
+      }
+       
+      let my_identity: GenericIdentityFn<number> = identity;
+    `,
+    // https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-classes
+    `
+      class GenericNumber<NumType> {
+        zero_value: NumType;
+        add: (x: NumType, y: NumType) => NumType;
+      }
+    `,
+    // https://www.typescriptlang.org/docs/handbook/2/generics.html#using-class-types-in-generics
+    `
+      class BeeKeeper {
+        has_mask: boolean = true;
+      }
+       
+      class ZooKeeper {
+        name_tag: string = "Mikle";
+      }
+       
+      class Animal {
+        num_legs: number = 4;
+      }
+       
+      class Bee extends Animal {
+        num_legs = 6;
+        keeper: BeeKeeper = new BeeKeeper();
+      }
+       
+      class Lion extends Animal {
+        keeper: ZooKeeper = new ZooKeeper();
+      }
+       
+      function create_instance<A extends Animal>(c: new () => A): A {
+        return new c();
+      }
+       
+      create_instance(Lion).keeper.name_tag;
+      create_instance(Bee).keeper.has_mask;
+    `,
+
+    `
+      type DeepPartial<T> = {
+        [K in keyof T]?: T[K] extends object
+          ? DeepPartial<T[K]>
+          : T[K];
+      };
+      
+      type Flatten<T> = T extends Array<infer U>
+        ? U
+        : T extends object
+        ? { [K in keyof T]: T[K] }
+        : T;
+      
+      type Combine<T> = T extends object
+        ? Flatten<{ [K in keyof T]: T[K] }>
+        : T;
+      
+      type TupleToUnion<T> = T extends [infer U, ...infer Rest]
+        ? U | TupleToUnion<Rest>
+        : T;
+    `,
   ],
   invalid: [
     {
@@ -42,6 +128,7 @@ tester.run("snake-case", snake_case, {
     {
       code: "const FOO_BAR = 1;",
       output: "const foo_bar = 1;",
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
       options: ["always", { disableScreaming: true }],
       errors: [
         {

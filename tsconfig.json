@@ -10,14 +10,13 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
   "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
+    "esm": true
   },
   "include": ["src"]
 }

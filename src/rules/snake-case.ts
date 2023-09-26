@@ -1,13 +1,14 @@
 import { Rule } from "eslint";
-import { DEFAULT_FILTER, PRIMITIVE_AND_BUILT_IN_TYPES } from "../constants";
+import { DEFAULT_SKIP, PRIMITIVE_AND_BUILT_IN_TYPES } from "../constants";
 import { is_snake_case, to_snake_case } from "../utils";
 
 export const snake_case: Rule.RuleModule = {
+  /* eslint-disable prefer-snakecase/prefer-snakecase */
   meta: {
     docs: {
       description: "Enforces `snake_case` naming for identifiers.",
       recommended: true,
-      url: "https://github.com/zignis/eslint-plugin-snake-case/blob/main/docs/rules/snake-case.md",
+      url: "https://github.com/zignis/eslint-plugin-prefer-snakecase/blob/main/docs/rules/prefer-snakecase.md",
     },
     schema: {
       type: "array",
@@ -43,6 +44,7 @@ export const snake_case: Rule.RuleModule = {
     fixable: "code",
     type: "suggestion",
   },
+  /* eslint-enable prefer-snakecase/prefer-snakecase */
   create(context) {
     const [, settings = {}] = context.options;
     const whitelist: string[] = Array.isArray(settings.whitelist)
@@ -50,11 +52,12 @@ export const snake_case: Rule.RuleModule = {
       : [];
     const skip: string[] = Array.isArray(settings.skip)
       ? settings.skip
-      : DEFAULT_FILTER;
+      : DEFAULT_SKIP;
     const disable_screaming = Boolean(settings.disableScreaming);
 
     // noinspection JSUnusedGlobalSymbols
     return {
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
       Identifier(node) {
         const name = node.name;
 
@@ -63,7 +66,10 @@ export const snake_case: Rule.RuleModule = {
           !PRIMITIVE_AND_BUILT_IN_TYPES.includes(name) &&
           !whitelist.includes(name)
         ) {
-          if (skip.includes(node.parent.type)) {
+          if (
+            skip.includes(node.parent.type) ||
+            [node.type, node.parent.type].includes("ImportSpecifier") // Always skip imports
+          ) {
             return;
           }
 
