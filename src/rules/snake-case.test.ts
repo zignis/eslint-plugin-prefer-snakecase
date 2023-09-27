@@ -31,6 +31,19 @@ tester.run("snake-case", snake_case, {
     "type SomeType = string",
     "interface SomeInterface {}",
     {
+      code: `
+        const { someProp: some_prop } = {};
+        const { 
+          someProp: some_prop,
+          otherProp: other_prop,
+          snake_prop,
+          normal
+        } = {};
+      `,
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
+      options: ["always", { allowDestructuringAssignment: true }],
+    },
+    {
       code: "const fooBar = 1;",
       options: ["always", { whitelist: ["fooBar"] }],
     },
@@ -152,6 +165,17 @@ tester.run("snake-case", snake_case, {
     {
       code: "const obj = { someProp: true };",
       output: "const obj = { some_prop: true };",
+      errors: [
+        {
+          message: "Identifiers must be in snake_case: `someProp` (Property)",
+        },
+      ],
+    },
+    {
+      code: "const { someProp: other_prop } = {};",
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
+      options: ["always", { allowDestructuringAssignment: true }],
+      output: "const { some_prop: other_prop } = {};",
       errors: [
         {
           message: "Identifiers must be in snake_case: `someProp` (Property)",

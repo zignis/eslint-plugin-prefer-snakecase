@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-prefer-snakecase",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "Enforce snake_case naming rule for identifiers",
   "engines": {
     "node": ">=8.10.0"
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@types/eslint": "^8.44.3",
     "@types/jest": "^29.5.5",
+    "@types/json-stringify-safe": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
     "concurrently": "^8.2.1",
@@ -39,6 +40,7 @@
     "eslint-plugin-prefer-snakecase": "^1.5.0",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
+    "json-stringify-safe": "^5.0.1",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "rimraf": "^4.4.0",

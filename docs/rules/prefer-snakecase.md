@@ -73,7 +73,22 @@ Allows the use of `PascalCase` identifiers. (Useful for React component declarat
 const MyComponent = () => <div>hello</div>;
 ```
 
-### whitelist
+### `allowDestructuringAssignment`
+
+- Type: `boolean`
+- Default: `false`
+
+Allows the use of destructuring property assignments inside objects
+when the snake-cased value of the key is equal to the assigned value.
+
+```js
+/*eslint prefer-snakecase: ["error", "always", { "allowDestructuringAssignment": true }]*/
+
+// Valid
+const { someProp: some_prop } = {};
+```
+
+### `whitelist`
 
 - Type: `string[]`
 - Default: `[]`
@@ -86,7 +101,7 @@ Array of custom identifiers to ignore.
 const fooBar = 1; // Valid
 ```
 
-### skip
+### `skip`
 
 - Type: `string[]`
 - Default: [Source](https://github.com/zignis/eslint-plugin-prefer-snakecase/blob/main/src/constants/index.ts#L4)

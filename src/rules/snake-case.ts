@@ -1,6 +1,13 @@
 import { Rule } from "eslint";
+import stringify from "json-stringify-safe";
 import { DEFAULT_SKIP, PRIMITIVE_AND_BUILT_IN_TYPES } from "../constants";
-import { is_pascal_case, is_snake_case, to_snake_case } from "../utils";
+import {
+  is_pascal_case,
+  is_snake_case,
+  to_snake_case,
+  is_property_node,
+  is_identifier_node,
+} from "../utils";
 
 export const snake_case: Rule.RuleModule = {
   /* eslint-disable prefer-snakecase/prefer-snakecase */
@@ -25,6 +32,9 @@ export const snake_case: Rule.RuleModule = {
               type: "boolean",
             },
             allowPascalCase: {
+              type: "boolean",
+            },
+            allowDestructuringAssignment: {
               type: "boolean",
             },
             whitelist: {
@@ -58,6 +68,9 @@ export const snake_case: Rule.RuleModule = {
       : DEFAULT_SKIP;
     const disable_screaming = Boolean(settings.disableScreaming);
     const allow_pascal_case = Boolean(settings.allowPascalCase);
+    const allow_destructuring_assignment = Boolean(
+      settings.allowDestructuringAssignment
+    );
 
     // noinspection JSUnusedGlobalSymbols
     return {
@@ -85,6 +98,25 @@ export const snake_case: Rule.RuleModule = {
           // Handle SCREAMING_SNAKE_CASE
           if (!disable_screaming && is_snake_case(name, true)) {
             return;
+          }
+
+          if (allow_destructuring_assignment) {
+            try {
+              const parent = JSON.parse(stringify(node.parent));
+
+              if (
+                is_property_node(parent) &&
+                is_identifier_node(parent.key) &&
+                is_identifier_node(parent.value)
+              ) {
+                // Allows `{ someKey: some_key }`
+                if (to_snake_case(parent.key.name) === parent.value.name) {
+                  return;
+                }
+              }
+            } catch {
+              // noop
+            }
           }
 
           context.report({

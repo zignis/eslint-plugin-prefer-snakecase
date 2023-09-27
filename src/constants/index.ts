@@ -18,6 +18,7 @@ export const DEFAULT_SKIP: string[] = [
 // Taken from https://github.com/ptkdev/eslint-plugin-snakecasejs/blob/b469a0ed2206a20cb30982d184b247b977af9cba/plugin.js#L52
 export const PRIMITIVE_AND_BUILT_IN_TYPES = [
   "Array",
+  "Object",
   "RegExp",
   "Date",
   "Number",
