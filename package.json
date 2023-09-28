@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-prefer-snakecase",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Enforce snake_case naming rule for identifiers",
   "engines": {
     "node": ">=8.10.0"

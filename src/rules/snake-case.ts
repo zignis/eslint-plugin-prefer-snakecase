@@ -7,6 +7,8 @@ import {
   to_snake_case,
   is_property_node,
   is_identifier_node,
+  is_import_specifier_node,
+  is_export_specifier_node,
 } from "../utils";
 
 export const snake_case: Rule.RuleModule = {
@@ -34,7 +36,10 @@ export const snake_case: Rule.RuleModule = {
             allowPascalCase: {
               type: "boolean",
             },
-            allowDestructuringAssignment: {
+            allowDestructuringPattern: {
+              type: "boolean",
+            },
+            disableImportExportCheck: {
               type: "boolean",
             },
             whitelist: {
@@ -67,9 +72,12 @@ export const snake_case: Rule.RuleModule = {
       ? settings.skip
       : DEFAULT_SKIP;
     const disable_screaming = Boolean(settings.disableScreaming);
+    const disable_import_export_check = Boolean(
+      settings.disableImportExportCheck
+    );
     const allow_pascal_case = Boolean(settings.allowPascalCase);
-    const allow_destructuring_assignment = Boolean(
-      settings.allowDestructuringAssignment
+    const allow_destructuring_pattern = Boolean(
+      settings.allowDestructuringPattern
     );
 
     // noinspection JSUnusedGlobalSymbols
@@ -83,9 +91,16 @@ export const snake_case: Rule.RuleModule = {
           !PRIMITIVE_AND_BUILT_IN_TYPES.includes(name) &&
           !whitelist.includes(name)
         ) {
+          if (skip.includes(node.parent.type)) {
+            return;
+          }
+
           if (
-            skip.includes(node.parent.type) ||
-            [node.type, node.parent.type].includes("ImportSpecifier") // Always skip imports
+            disable_import_export_check &&
+            [node, node.parent].some(
+              (node) =>
+                is_import_specifier_node(node) || is_export_specifier_node(node)
+            )
           ) {
             return;
           }
@@ -100,11 +115,29 @@ export const snake_case: Rule.RuleModule = {
             return;
           }
 
-          if (allow_destructuring_assignment) {
+          if (allow_destructuring_pattern) {
             try {
               const parent = JSON.parse(stringify(node.parent));
 
               if (
+                is_import_specifier_node(parent) &&
+                is_identifier_node(parent.local) &&
+                is_identifier_node(parent.imported)
+              ) {
+                // Allows `import { someMod as some_mod } from 'some-mod';`
+                if (to_snake_case(parent.imported.name) === parent.local.name) {
+                  return;
+                }
+              } else if (
+                is_export_specifier_node(parent) &&
+                is_identifier_node(parent.local) &&
+                is_identifier_node(parent.exported)
+              ) {
+                // Allows `export { someMod as some_mod } from 'some-mod';`
+                if (to_snake_case(parent.local.name) === parent.exported.name) {
+                  return;
+                }
+              } else if (
                 is_property_node(parent) &&
                 is_identifier_node(parent.key) &&
                 is_identifier_node(parent.value)

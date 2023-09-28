@@ -13,6 +13,8 @@ Examples of **incorrect** code:
 ```js
 /*eslint prefer-snakecase: "error"*/
 
+import { some_mod, otherMod } from "mods";
+
 var fooBar = 1;
 
 function doSomething() {}
@@ -24,12 +26,16 @@ const obj = {
 class SomeClass {
   someMethod() {}
 }
+
+export { fooBar };
 ```
 
 Examples of **correct** code:
 
 ```js
 /*eslint prefer-snakecase: "error"*/
+
+import { some_mod, otherMod as other_mod } from "mods";
 
 var foo_bar = 1;
 
@@ -42,6 +48,8 @@ const obj = {
 class SomeClass {
   some_method() {}
 }
+
+export { foo_bar, otherMod as other_mod };
 ```
 
 ## Options
@@ -59,6 +67,19 @@ Disallows the use of `SCREAMING_SNAKE_CASE` identifiers.
 const FOO_BAR = 1; // Invalid
 ```
 
+### `disableImportExportCheck`
+
+- Type: `boolean`
+- Default: `false`
+
+Skips checking import and export expressions.
+
+```js
+/*eslint prefer-snakecase: ["error", "always", { "disableImportExportCheck": true }]*/
+
+export { someMod }; // Invalid
+```
+
 ### `allowPascalCase`
 
 - Type: `boolean`
@@ -73,19 +94,22 @@ Allows the use of `PascalCase` identifiers. (Useful for React component declarat
 const MyComponent = () => <div>hello</div>;
 ```
 
-### `allowDestructuringAssignment`
+### `allowDestructuringPattern`
 
 - Type: `boolean`
 - Default: `false`
 
-Allows the use of destructuring property assignments inside objects
-when the snake-cased value of the key is equal to the assigned value.
+Allows the use of destructuring property in imports, exports, and object assignments, when the snake-cased value of the LHS property is equal to the assigned (RHS) value.
 
 ```js
-/*eslint prefer-snakecase: ["error", "always", { "allowDestructuringAssignment": true }]*/
+/*eslint prefer-snakecase: ["error", "always", { "allowDestructuringPattern": true }]*/
 
 // Valid
+import { someMod as some_mod } from "some";
+
 const { someProp: some_prop } = {};
+
+export { otherMod as other_mod };
 ```
 
 ### `whitelist`

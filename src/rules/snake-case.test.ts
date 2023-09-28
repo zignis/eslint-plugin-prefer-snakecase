@@ -41,13 +41,22 @@ tester.run("snake-case", snake_case, {
         } = {};
       `,
       // eslint-disable-next-line prefer-snakecase/prefer-snakecase
-      options: ["always", { allowDestructuringAssignment: true }],
+      options: ["always", { allowDestructuringPattern: true }],
     },
     {
       code: "const fooBar = 1;",
       options: ["always", { whitelist: ["fooBar"] }],
     },
-    "import { Some } from 'some';",
+    {
+      code: "import { some, otherMod as other_mod } from 'some';",
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
+      options: ["always", { allowDestructuringPattern: true }],
+    },
+    {
+      code: "export { some, otherMod as other_mod }",
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
+      options: ["always", { allowDestructuringPattern: true }],
+    },
     `
       enum SomeEnum {
         SOME_VALUE,
@@ -174,7 +183,7 @@ tester.run("snake-case", snake_case, {
     {
       code: "const { someProp: other_prop } = {};",
       // eslint-disable-next-line prefer-snakecase/prefer-snakecase
-      options: ["always", { allowDestructuringAssignment: true }],
+      options: ["always", { allowDestructuringPattern: true }],
       output: "const { some_prop: other_prop } = {};",
       errors: [
         {
