@@ -1,12 +1,11 @@
-
-import { JSXExpressionContainer, BaseNode } from "estree-jsx";
+import { JSXAttribute, BaseNode } from "estree-jsx";
 
 /**
- * Predicate function for determining `JSXExpressionContainer` nodes
+ * Predicate function for determining `JSXAttribute` nodes
  * @param node Node
  */
-export const is_jsx_expression_container_node = (
+export const is_jsx_attribute_node = (
   node?: BaseNode | null
-): node is JSXExpressionContainer => {
-  return Boolean(node?.type === "JSXExpressionContainer");
+): node is JSXAttribute => {
+  return Boolean(node?.type === "JSXAttribute");
 };

@@ -147,6 +147,21 @@ tester.run("snake-case", snake_case, {
       // eslint-disable-next-line prefer-snakecase/prefer-snakecase
       options: ["always", { allowPascalCase: true }],
     },
+    {
+      code: `
+        const Component = () => (
+            <div 
+              style={{
+                  backgroundColor: "rebeccapurple",
+                  fontSize: "14px",
+                  lineHeight: 1.875
+              }} 
+            />
+        ); 
+      `,
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
+      options: ["always", { allowPascalCase: true }],
+    },
   ],
   invalid: [
     {

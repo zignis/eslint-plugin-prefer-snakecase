@@ -5,7 +5,7 @@ import { BaseNode, ImportSpecifier } from "estree";
  * @param node Node
  */
 export const is_import_specifier_node = (
-  node: BaseNode
+  node?: BaseNode | null
 ): node is ImportSpecifier => {
-  return node.type === "ImportSpecifier";
+  return Boolean(node?.type === "ImportSpecifier");
 };

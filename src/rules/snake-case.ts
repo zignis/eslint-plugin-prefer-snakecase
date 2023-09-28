@@ -9,6 +9,7 @@ import {
   is_identifier_node,
   is_import_specifier_node,
   is_export_specifier_node,
+  is_jsx_attribute_node,
 } from "../utils";
 
 export const snake_case: Rule.RuleModule = {
@@ -91,6 +92,16 @@ export const snake_case: Rule.RuleModule = {
           !PRIMITIVE_AND_BUILT_IN_TYPES.includes(name) &&
           !whitelist.includes(name)
         ) {
+          const attribute_node = node.parent?.parent?.parent?.parent; // Property -> ObjectExpression -> JSXExpressionContainer -> JSXAttribute
+
+          // Skip the properties inside `style` JSX attribute
+          if (
+            is_jsx_attribute_node(attribute_node) &&
+            attribute_node.name.name === "style"
+          ) {
+            return;
+          }
+
           if (skip.includes(node.parent.type)) {
             return;
           }
