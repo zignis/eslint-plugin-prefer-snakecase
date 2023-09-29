@@ -36,6 +36,7 @@ tester.run("snake-case", snake_case, {
         const { 
           someProp: some_prop,
           otherProp: other_prop,
+          propWithFallback: prop_with_fallback = true,
           snake_prop,
           normal
         } = {};

@@ -7,3 +7,5 @@ export * from "./is-export-specifier-node";
 export * from "./is-import-specifier-node";
 export * from "./is-jsx-attribute-node";
 export * from "./is-ts-as-expression-node";
+export * from "./is-assignment-expression-node";
+export * from "./is-assignment-pattern-node";

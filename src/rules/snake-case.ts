@@ -11,6 +11,8 @@ import {
   is_export_specifier_node,
   is_jsx_attribute_node,
   is_ts_as_expression_node,
+  is_assignment_expression_node,
+  is_assignment_pattern_node,
 } from "../utils";
 
 export const snake_case: Rule.RuleModule = {
@@ -153,12 +155,25 @@ export const snake_case: Rule.RuleModule = {
                 if (is_snake_case(parent.exported.name)) {
                   return;
                 }
-              } else if (
-                is_property_node(parent) &&
-                is_identifier_node(parent.value)
-              ) {
+              } else if (is_property_node(parent)) {
+                const value_node = parent.value;
+
+                // Allows `{ someKey: some_key = "some_default_value" }`
+                if (
+                  ((is_assignment_expression_node(value_node) &&
+                    value_node.operator === "=") ||
+                    is_assignment_pattern_node(value_node)) &&
+                  is_identifier_node(value_node.left) &&
+                  is_snake_case(value_node.left.name)
+                ) {
+                  return;
+                }
+
                 // Allows `{ someKey: some_key }`
-                if (is_snake_case(parent.value.name)) {
+                if (
+                  is_identifier_node(value_node) &&
+                  is_snake_case(value_node.name)
+                ) {
                   return;
                 }
               }
