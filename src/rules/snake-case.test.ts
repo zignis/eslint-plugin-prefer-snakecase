@@ -162,6 +162,20 @@ tester.run("snake-case", snake_case, {
       // eslint-disable-next-line prefer-snakecase/prefer-snakecase
       options: ["always", { allowPascalCase: true }],
     },
+    {
+      code: `
+        const Component = () => (
+            <div 
+              style={{
+                  "--some-var": "rebeccapurple",
+                  lineHeight: 1.875
+              } as React.CSSProperties} 
+            />
+        ); 
+      `,
+      // eslint-disable-next-line prefer-snakecase/prefer-snakecase
+      options: ["always", { allowPascalCase: true }],
+    },
   ],
   invalid: [
     {

@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-prefer-snakecase",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "Enforce snake_case naming rule for identifiers",
   "engines": {
     "node": ">=8.10.0"
@@ -36,6 +36,7 @@
     "@types/json-stringify-safe": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
+    "@typescript-eslint/utils": "^6.7.3",
     "concurrently": "^8.2.1",
     "eslint": "^8.50.0",
     "eslint-plugin-prefer-snakecase": "^1.7.0",
