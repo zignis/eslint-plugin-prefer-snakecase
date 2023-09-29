@@ -99,17 +99,17 @@ const MyComponent = () => <div>hello</div>;
 - Type: `boolean`
 - Default: `false`
 
-Allows the use of destructuring property in imports, exports, and object assignments, when the snake-cased value of the LHS property is equal to the assigned (RHS) value.
+Allows the use of destructuring property in imports, exports, and object assignments, when the value on the right-hand side of the expression is in snake case.
 
 ```js
 /*eslint prefer-snakecase: ["error", "always", { "allowDestructuringPattern": true }]*/
 
 // Valid
-import { someMod as some_mod } from "some";
+import { someMod as some_local_mod, otherMod as other_mod } from "some";
 
-const { someProp: some_prop } = {};
+const { someProp: some_local_prop, otherProp: other_prop } = {};
 
-export { otherMod as other_mod };
+export { someMod as some_local_mode, otherMod as other_mod };
 ```
 
 ### `whitelist`

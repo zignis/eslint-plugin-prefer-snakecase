@@ -132,29 +132,26 @@ export const snake_case: Rule.RuleModule = {
 
               if (
                 is_import_specifier_node(parent) &&
-                is_identifier_node(parent.local) &&
-                is_identifier_node(parent.imported)
+                is_identifier_node(parent.local)
               ) {
                 // Allows `import { someMod as some_mod } from 'some-mod';`
-                if (to_snake_case(parent.imported.name) === parent.local.name) {
+                if (is_snake_case(parent.local.name)) {
                   return;
                 }
               } else if (
                 is_export_specifier_node(parent) &&
-                is_identifier_node(parent.local) &&
                 is_identifier_node(parent.exported)
               ) {
                 // Allows `export { someMod as some_mod } from 'some-mod';`
-                if (to_snake_case(parent.local.name) === parent.exported.name) {
+                if (is_snake_case(parent.exported.name)) {
                   return;
                 }
               } else if (
                 is_property_node(parent) &&
-                is_identifier_node(parent.key) &&
                 is_identifier_node(parent.value)
               ) {
                 // Allows `{ someKey: some_key }`
-                if (to_snake_case(parent.key.name) === parent.value.name) {
+                if (is_snake_case(parent.value.name)) {
                   return;
                 }
               }

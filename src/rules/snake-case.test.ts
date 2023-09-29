@@ -196,13 +196,16 @@ tester.run("snake-case", snake_case, {
       ],
     },
     {
-      code: "const { someProp: other_prop } = {};",
+      code: "const { someProp: otherProp } = {};",
       // eslint-disable-next-line prefer-snakecase/prefer-snakecase
       options: ["always", { allowDestructuringPattern: true }],
       output: "const { some_prop: other_prop } = {};",
       errors: [
         {
           message: "Identifiers must be in snake_case: `someProp` (Property)",
+        },
+        {
+          message: "Identifiers must be in snake_case: `otherProp` (Property)",
         },
       ],
     },
